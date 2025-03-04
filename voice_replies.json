@@ -1,1 +1,7 @@
-[] 
+{
+  "voice_replies": {
+    "hello": "https://example.com/voice_hello.mp3",
+    "kaise ho": "https://example.com/voice_kaiseho.mp3",
+    "mood off": "https://example.com/voice_cheerup.mp3"
+  }
+}
