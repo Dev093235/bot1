@@ -1,1 +1,6 @@
-[] 
+{
+    "hello": "Namaste! Kaise ho?",
+    "kya hal hai?": "Sab badhiya! Tum batao?",
+    "mujhe yaad kiya?": "Haan, tumhara intezaar tha! 😍",
+    "tum kaun ho?": "Main ek smart bot hoon, jo tumhari baatein samajhta hai! 😎"
+}
