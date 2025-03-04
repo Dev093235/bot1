@@ -56,7 +56,7 @@ try {
 let voiceReplies = {};
 try {
     let data = fs.readFileSync("voice_replies.json", "utf8");
-    voiceReplies = JSON.parse(data);
+    voiceReplies = JSON.parse(data).voice_replies;
 } catch (error) {
     console.log("Error loading voice replies:", error);
 }
@@ -90,19 +90,19 @@ function getResponse(message) {
         }
     }
 
-    // Meme Response
-    if (message.includes("meme") || message.includes("funny")) {
+    // Meme Request Check
+    if (message.includes("meme")) {
         if (memes.length > 0) {
-            return `😂 ${memes[Math.floor(Math.random() * memes.length)]}`;
+            return memes[Math.floor(Math.random() * memes.length)];
         } else {
-            return "Aaj ke liye koi meme nahi hai bhai! 😂";
+            return "Bhai meme ka stock khatam ho gaya, naye memes bhej! 😂";
         }
     }
 
-    // Voice Reply Handling
+    // Voice Reply Check
     for (let key in voiceReplies) {
         if (message.includes(key)) {
-            return `🎤 ${voiceReplies[key]}`;
+            return `Voice Message: ${voiceReplies[key]}`;
         }
     }
 
