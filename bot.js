@@ -43,6 +43,24 @@ try {
     console.log("Error loading flirty messages:", error);
 }
 
+// Memes Load karna
+let memes = [];
+try {
+    let data = fs.readFileSync("memes.json", "utf8");
+    memes = JSON.parse(data).memes;
+} catch (error) {
+    console.log("Error loading memes:", error);
+}
+
+// Voice Replies Load karna
+let voiceReplies = {};
+try {
+    let data = fs.readFileSync("voice_replies.json", "utf8");
+    voiceReplies = JSON.parse(data);
+} catch (error) {
+    console.log("Error loading voice replies:", error);
+}
+
 // Bot Response Function
 function getResponse(message) {
     message = message.toLowerCase();
@@ -72,12 +90,27 @@ function getResponse(message) {
         }
     }
 
+    // Meme Response
+    if (message.includes("meme") || message.includes("funny")) {
+        if (memes.length > 0) {
+            return `😂 ${memes[Math.floor(Math.random() * memes.length)]}`;
+        } else {
+            return "Aaj ke liye koi meme nahi hai bhai! 😂";
+        }
+    }
+
+    // Voice Reply Handling
+    for (let key in voiceReplies) {
+        if (message.includes(key)) {
+            return `🎤 ${voiceReplies[key]}`;
+        }
+    }
+
     // Gender based response
     if (gender === "male") {
         return "Tu ek dum bindass banda hai bhai!";
     } else if (gender === "female") {
         return "Aap ek dum sherni ho, respect! 👸";
-
     }
 
     // Default response
