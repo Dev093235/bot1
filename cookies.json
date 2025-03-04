@@ -1,1 +1,18 @@
-[] 
+[
+    {
+        "key": "c_user",
+        "value": "61573832129271",
+        "domain": ".facebook.com",
+        "path": "/",
+        "httpOnly": false,
+        "secure": true
+    },
+    {
+        "key": "xs",
+        "value": "32%3AQuvUQvmfXbMp7Q%3A2%3A1741014332%3A-1%3A-1%3A%3AAcW3O5Y5kiff171IDSNdMSfsq5VdZGfNzSeGYtQeaw",
+        "domain": ".facebook.com",
+        "path": "/",
+        "httpOnly": true,
+        "secure": true
+    }
+]
