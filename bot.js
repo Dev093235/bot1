@@ -3,15 +3,23 @@ const fs = require("fs");
 const readline = require("readline");
 
 async function loginWithCookies() {
-    const browser = await puppeteer.launch({ headless: false });
+    const browser = await puppeteer.launch({ 
+        headless: false, 
+        args: ["--no-sandbox", "--disable-setuid-sandbox"] 
+    });
+
     const page = await browser.newPage();
 
-    // Cookies Load Karna
-    const cookies = JSON.parse(fs.readFileSync("cookies.json", "utf8"));
-    await page.setCookie(...cookies);
+    try {
+        // Cookies Load Karna
+        const cookies = JSON.parse(fs.readFileSync("cookies.json", "utf8"));
+        await page.setCookie(...cookies);
 
-    await page.goto("https://www.facebook.com/");
-    console.log("Facebook Login with Cookies Done!");
+        await page.goto("https://www.facebook.com/");
+        console.log("Facebook Login with Cookies Done!");
+    } catch (error) {
+        console.error("Error loading cookies:", error);
+    }
 
     return { browser, page };
 }
@@ -48,29 +56,19 @@ async function startBot() {
         return "unknown";
     }
 
-    let flirtyMessages = [];
-    try {
-        let data = fs.readFileSync("flirty_messages.json", "utf8");
-        flirtyMessages = JSON.parse(data).messages;
-    } catch (error) {
-        console.log("Error loading flirty messages:", error);
+    function loadJSON(filePath, defaultValue) {
+        try {
+            let data = fs.readFileSync(filePath, "utf8");
+            return JSON.parse(data);
+        } catch (error) {
+            console.log(`Error loading ${filePath}:`, error);
+            return defaultValue;
+        }
     }
 
-    let memes = [];
-    try {
-        let data = fs.readFileSync("memes.json", "utf8");
-        memes = JSON.parse(data).memes;
-    } catch (error) {
-        console.log("Error loading memes:", error);
-    }
-
-    let voiceReplies = {};
-    try {
-        let data = fs.readFileSync("voice_replies.json", "utf8");
-        voiceReplies = JSON.parse(data).voice_replies;
-    } catch (error) {
-        console.log("Error loading voice replies:", error);
-    }
+    let flirtyMessages = loadJSON("flirty_messages.json", { messages: [] }).messages;
+    let memes = loadJSON("memes.json", { memes: [] }).memes;
+    let voiceReplies = loadJSON("voice_replies.json", { voice_replies: {} }).voice_replies;
 
     function getResponse(message) {
         message = message.toLowerCase();
