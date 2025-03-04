@@ -1,0 +1,25 @@
+name: Auto Deploy Node.js Bot
+
+on:
+  push:
+    branches:
+      - main  # Jab bhi main branch update hogi, ye action chalega
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Clone Repository
+        uses: actions/checkout@v3
+
+      - name: Install Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Install Dependencies
+        run: npm install  # Agar `package.json` hai to dependencies install karega
+
+      - name: Run the Bot
+        run: node bot.js  # Tumhari main bot file yahi honi chahiye
