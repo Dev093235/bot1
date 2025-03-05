@@ -10,16 +10,25 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Clone Repository
+      - name: 📂 Clone Repository
         uses: actions/checkout@v3
 
-      - name: Install Node.js
+      - name: 🔧 Fix Git Extraheader Issue
+        run: git config --global --unset http.https://github.com/.extraheader || true
+
+      - name: 🔥 Install Node.js
         uses: actions/setup-node@v3
         with:
           node-version: 18
 
-      - name: Install Dependencies
+      - name: 📦 Install Dependencies
         run: npm install  # Agar `package.json` hai to dependencies install karega
 
-      - name: Run the Bot
-        run: node bot.js  # Tumhari main bot file yahi honi chahiye
+      - name: 🖥️ Install Xvfb (for GUI Apps)
+        run: sudo apt-get install -y xvfb
+
+      - name: 🚀 Run the Bot
+        run: xvfb-run --auto-servernum -- node bot.js
+        env:
+          PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: "true"
+          PUPPETEER_EXECUTABLE_PATH: "/usr/bin/google-chrome-stable"
