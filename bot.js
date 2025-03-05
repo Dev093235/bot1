@@ -1,25 +1,26 @@
 const puppeteer = require('puppeteer');
 
 (async () => {
-    try {
-        const browser = await puppeteer.launch({
-            headless: true,  // ✅ Safe headless mode (No "new")
-            args: [
-                "--no-sandbox",
-                "--disable-setuid-sandbox",
-                "--disable-gpu",
-                "--disable-dev-shm-usage"
-            ]
-        });
+    const browser = await puppeteer.launch({
+        headless: false,  // ✅ Headless disable karo taaki debug kar sako
+        args: [
+            "--no-sandbox",
+            "--disable-setuid-sandbox",
+            "--disable-gpu",
+            "--disable-dev-shm-usage"
+        ]
+    });
 
-        const page = await browser.newPage();
-        await page.goto('https://www.facebook.com/', { waitUntil: 'networkidle2' });
+    const page = await browser.newPage();
+    await page.goto('https://www.facebook.com/', { waitUntil: 'networkidle2' });
 
-        console.log("✅ Page Loaded Successfully!");
+    console.log("✅ Page Loaded Successfully!");
 
-        await browser.close();
-    } catch (error) {
-        console.error("❌ Error Occurred:", error);
-        process.exit(1); // ❌ Fail the GitHub Actions job
+    // 👇 Bot ko running rakhne ke liye ek infinite loop
+    while (true) {
+        console.log("Bot is still running...");
+        await page.waitForTimeout(30000);  // Har 30 sec me check karega
     }
+
+    // await browser.close();  // ❌ Isko hata do agar bot continuously chalana hai
 })();
