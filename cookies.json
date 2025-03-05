@@ -1,4 +1,4 @@
-module.exports = [
+[
     {
         "key": "c_user",
         "value": "61573832129271",
@@ -15,4 +15,4 @@ module.exports = [
         "httpOnly": true,
         "secure": true
     }
-];
+]
