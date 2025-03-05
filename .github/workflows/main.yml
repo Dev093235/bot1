@@ -3,7 +3,7 @@ name: Auto Deploy Node.js Bot
 on:
   push:
     branches:
-      - main  # Jab bhi main branch update hogi, ye action chalega
+      - main
 
 jobs:
   deploy:
@@ -12,12 +12,15 @@ jobs:
     steps:
       - name: 📂 Clone Repository
         uses: actions/checkout@v3
+        with:
+          persist-credentials: false
 
       - name: 🛠 Fix Git Config Issues
         run: |
           git config --global --unset http.https://github.com/.extraheader || true
           git config --global --unset credential.helper || true
           git config --global --unset-all credential.helper || true
+          git config --global --add safe.directory "$GITHUB_WORKSPACE"
 
       - name: 🔥 Install Node.js
         uses: actions/setup-node@v3
