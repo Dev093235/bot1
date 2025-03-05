@@ -13,8 +13,11 @@ jobs:
       - name: 📂 Clone Repository
         uses: actions/checkout@v3
 
-      - name: 🛠 Fix Git Extraheader Issue
-        run: git config --global --unset http.https://github.com/.extraheader || true
+      - name: 🛠 Fix Git Config Issues
+        run: |
+          git config --global --unset http.https://github.com/.extraheader || true
+          git config --global --unset credential.helper || true
+          git config --global --unset-all credential.helper || true
 
       - name: 🔥 Install Node.js
         uses: actions/setup-node@v3
@@ -22,7 +25,7 @@ jobs:
           node-version: 18
 
       - name: 📦 Install Dependencies
-        run: npm install  # Agar `package.json` hai to dependencies install karega
+        run: npm install
 
       - name: 🖥️ Install Xvfb (for GUI Apps)
         run: sudo apt-get install -y xvfb
